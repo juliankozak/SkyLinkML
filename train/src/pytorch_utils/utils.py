@@ -1,3 +1,5 @@
+# source: https://github.com/pytorch/vision.git
+
 from __future__ import print_function
 
 from collections import defaultdict, deque

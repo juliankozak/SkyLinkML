@@ -1,3 +1,5 @@
+# source: https://github.com/pytorch/vision.git
+
 import copy
 import os
 from PIL import Image

@@ -1,3 +1,4 @@
+# source: https://github.com/pytorch/vision.git
 import json
 import tempfile
 
