@@ -1,0 +1,12 @@
+**/_temp/**
+**/docs/**
+**copy_**
+**.png
+**.jpg
+**.jpeg
+**.HEIC
+**.pt
+**.zip
+**.ipynb_checkpoints
+#**/.idea/**
+
