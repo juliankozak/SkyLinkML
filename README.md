@@ -103,6 +103,10 @@ Left image: original image. Middle image: calculated mask. Right image: Mask sup
 ## Second generation of camera mount
 ![camera-bird-eye-prototype](https://github.com/juliankozak/SkyLinkML/assets/82274251/2ada56be-d733-4f03-8cf9-5fed1d6ae390)
 
+![flight_images_bird_eye_150dpi](https://github.com/juliankozak/SkyLinkML/assets/82274251/b2eb4384-8038-4a9b-a17c-3d2da84af5c4)
+
+![link_quality](https://github.com/juliankozak/SkyLinkML/assets/82274251/56342453-5717-4263-9162-d1a48f7eaa8a)
+
 --> photo phoenix
 --> photo GUI
 --> GPS logging altitude
