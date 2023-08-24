@@ -1,25 +1,46 @@
 # SkyLinkML Project
 Idea & project start: February 2021   
 Last update and test flights: August 2023  
-Project status: ongoing
+Don't hesitate to contact me if you are interested in this project, I am open for collaboration!  
+Project status: ongoing and exciting!   
 
-# Concept for RC flights 
+# Introduction
 ![Concept](https://user-images.githubusercontent.com/82274251/123086547-d5275280-d423-11eb-9df7-8a1b019ed7b5.jpeg)
-**Glider towing** is a popular way of getting large and heavy glider planes into the air, but it is also one of the most challenging tasks for remote controlled airplane pilots. The glider is connected to the towing aircraft with a 20m long, few millimeter thin rope that is released from the glider once the desired altitude was reached by the two aircraft. The tow plane then usually descends and prepares for landing while the glider looks for thermals in order to remain in the air as long as possible. 
+**Glider towing** is a popular way of getting large and heavy glider planes into the air, but it is also one of the most challenging tasks for remote controlled airplane pilots. The glider is connected to the towing aircraft with a 20m long, few millimeter thin rope that is released from the glider side once the desired altitude was reached by the two aircraft. The tow plane then usually descends and prepares for landing while the glider searches for thermals in order to remain in the air as long as possible. 
 
 During the entire towing process, the glider pilot needs to keep the glider in a precise position behind the towing aircraft. Moreover, the glider pilot must maintain the same speed and same climbing rate as the tow plane. This can get particulary challenging at atlitudes exceeding 100m above ground and tailwind conditions during flight. Any small deviation from the safe flight path might cause the rope to break, stall of the towing plane or in worst case some structural damage to one or both of the planes (especially if the rope stretches abruptly).
 
-Usually, the two RC pilots, flying the glider and tow plane respectively, are standing close to each other and trying to communicate about varying wind conditions, airspeed, climbing rate, flight path, visibility etc.  **The larger the altitude, the more difficult it is for the RC glider pilot to estimate the relative position of the glider with respect to the towing aircraft and to maintain a safe flight path behind the tow plane. The rope is almost invisible at these altitudes.** 
+Usually, the two RC pilots, flying the glider and tow plane respectively, stand close to each other and try to communicate about varying wind conditions, airspeed, climbing rate, flight path, visibility etc.  **The larger the altitude, the more difficult it is for the RC glider pilot to estimate the relative position of the glider with respect to the towing aircraft and to maintain a safe flight path behind the tow plane. The rope is almost invisible at these altitudes.** 
 
 **Goal**  
-Using a computer vision machine learning model, the glider localizes his tow-plane and tries to automatically stay on the optimal flight path behind the towing aircraft until they reached the desired altitude. Glider towing is one possible application for this project. The same concept can be used for other applications such as formation flights, windshield or fuel consumption analysis.
+Using a computer vision machine learning model to localizes the tow-plane and try to automatically keep the glider on the optimal flight path behind the towing aircraft by generating control signals until they reached the desired altitude. Glider towing is one possible application for this project. The same concept can be used for other applications such as formation flights, windshield or fuel consumption analysis.
 
 
-**System design and components**  
+## System design and components
+The entire system is composed of the following components:
+- Two pilots with their remote controls flying the tow plane and the glider (nothing new so far). 
+- The glider is equipped with an onboard unit that records and broadcasts live images (FPV view) to the ground station with very low latency. Moreover, the onboard unit also contains a GPS receiver and a wireless module. 
+- The groundstation communicates with the onboard unit over the air. The groundstation is composed of a Jetson Nano for deploying the ML model and a notebook managing the application and showing the GUI. The groundstation generates voice commands that the pilots can hear, so they don't have to look at down the screen, especially during sunny days. 
+- I plan to take advantage of the trainer mode of remote controls to automaticaly fly the glider. The trainer mode allows to teach RC flying to a student by connecting the student and teachers remote controls. The teacher can configure in his remote which controls he wants to pass over to the student, and, more importantly, the teacher can take over control of the plane from the student by pushing a single button. The idea is to imitate the student and to generate the student's remote control output signal by the ground station and to pass the signal to the teacher's remote control. The teacher can then take over control of the glider at any time  This is a very important safety feature necessary to comply with the regulations for flying RC airplanes.
+
 ![Concept](https://github.com/juliankozak/SkyLinkML/assets/82274251/bc8ffd57-ade1-4609-857a-dbb89a335da2)
 
+**Components** (the list will be kept updated)
 
+**Onboard unit:**
+- Camera with Sony IMX477 Sensor, with wide-angle lens
+- ublox GPS receiver
+- Raspberry Pi Zero (as a processor inside the onboard unit)
+- AX1800 Wifi module with antenna diversity and Linux driver for Raspberry Pi. In order to avoid any interference with the remote control in the 2,4GHz, the Wifi module is configured to use the 5,8GHz ISM band. The increased propagation loss caused by the higher frequency is accepted and the connection is a pure line-of-sight link. This approach is safer since the rather large bandwidth occupied by the data channel might block many of the frequency hop channels used by the remote control, but some investigations are needed to confirm this. Maybe everything would also work reliably in the 2,4GHz band
+- power management 
 
+**Ground station:**
+- Nvidia Jetson Nano developer board
+- Laptop for GUI and application management
+- Power management (able to switch between different power sources without interruption)
+- AC1900 long range wireless router (TP-Link)
+
+Note: I am aware that there are more suitable and professional components on the market that would perform better, be smaller and more efficient. However, I decided for a trade-off between cost, availability and ease of use.
 
 
 **Project phases**
@@ -33,13 +54,7 @@ Using a computer vision machine learning model, the glider localizes his tow-pla
 
 
 
-**Components** (the list will be kept updated)
-- Nvidia Jetson Nano developer board to deploy the AI model
-- Camera with Sony IMX477 Sensor (Raspberry Pi Camera module with wide-angle lens)
-- Power management (able to switch between ground power and power from onboard battery without interruption)
-- Lightweight mounting frame for all the equipment (considering center of gravity)
-- RF backlink to ground (tbd)
-- autopilot module (tbd)
+
 
 
 
@@ -101,21 +116,29 @@ Left image: original image. Middle image: calculated mask. Right image: Mask sup
 ![calculated masks](https://user-images.githubusercontent.com/82274251/123094952-cb0a5180-d42d-11eb-96a7-cbc98af52df5.jpeg)
 
 ## Second generation of camera mount
+Initially, the goal was to put as little effort as possible into the hardware design and to get a flyable system as soon as possible. Based on the lessons learned from the first generation, the system design was updated. The main changes were:
+- A stable wireless link between onboard unit and ground station can be achieved, therefore
+- Jetson Nano (Nvidia) can remain on the ground, reducing weight, volume and energy consumption of the onboard unit,
+- A GPS module was added to the onboard unit
+- MIMO antenna system was added to the onboard unit
+- A flexible power supply with filtering was added to the onboard unit
+- The onboard unit was designed to be compact and easily mountable on different airplanes.
+
+The following image shows the updated design of the onboard unit. Most of the electronic components are packed into the baseplate and into the shaft of the frame. Only the camera and the GPS receiver are placed in the gondola. The unit is nicely balanced and can be mounted onto the plane while keeping the center of gravity of the plane unchanged.  
+
+**The new look of the onboard unit:**  
 ![camera-bird-eye-prototype](https://github.com/juliankozak/SkyLinkML/assets/82274251/2ada56be-d733-4f03-8cf9-5fed1d6ae390)
+
+The following images (reduced resolution for github) were recorded during one of the last flights. The towplane remains within the frame from take-off until separation, meaning that the selected wide angle camera lens is suitable for this application. The tow plane can be identified and is not too small on the picture.
 
 ![flight_images_bird_eye_150dpi](https://github.com/juliankozak/SkyLinkML/assets/82274251/b2eb4384-8038-4a9b-a17c-3d2da84af5c4)
 
+
+During all flights, GPS data and wireless signal parameters are constantly logged as a background task. The logfile is saved on the onboard unit and can be downloaded after landing for further analysis in case of unexpected signal outages. **Antenna diversity is absolutely necessary** for reliable wireless connection. The two antennas should be oriented as orthogonal as possible to each other in order to have appropriate gain in all directions.
 ![link_quality](https://github.com/juliankozak/SkyLinkML/assets/82274251/56342453-5717-4263-9162-d1a48f7eaa8a)
 
---> photo phoenix
---> photo GUI
---> GPS logging altitude
---> wireless signal strength
---> 3 photos from flight
 
-GPS module was added. 
-The focal length of the camera lens turned is ok.
-The tow plane remained nicely within the picture.
+
 It seems that the horizon can be used as a reference and no additional gyroscopic sensors are needed.
 center of gravity
 
@@ -126,3 +149,7 @@ decision to continue flying experimental flights with rather small foam airplane
 
 # Continuation
 Keeping airplanes precisely close to each other in the air without tow-rope. This can be useful for windshield analysis or for formation flights. 
+
+approach acc to lex paper.
+not publish source code 
+looking for collaboration with other enthoustiastic and wonderful people
