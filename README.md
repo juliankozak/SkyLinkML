@@ -1,17 +1,24 @@
-# Tow-plane detection
-Idea & project start: February 2021, project status: ongoing
+# SkyLinkML Project
+Idea & project start: February 2021   
+Last update and test flights: August 2023  
+Project status: ongoing
 
-**Goal**
+# Concept for RC flights 
+![Concept](https://user-images.githubusercontent.com/82274251/123086547-d5275280-d423-11eb-9df7-8a1b019ed7b5.jpeg)
+**Glider towing** is a popular way of getting large and heavy glider planes into the air, but it is also one of the most challenging tasks for remote controlled airplane pilots. The glider is connected to the towing aircraft with a 20m long, few millimeter thin rope that is released from the glider once the desired altitude was reached by the two aircraft. The tow plane then usually descends and prepares for landing while the glider looks for thermals in order to remain in the air as long as possible. 
 
-Using a computer vision AI-based model, the glider localizes his tow-plane and tries to automatically stay  on the optimal flight path behind the towing aircraft until reaching the desired altitude. Then, the glider pilot releases the tow-rope, the tow plane prepares for landing and the glider can start looking for thermals.   
+During the entire towing process, the glider pilot needs to keep the glider in a precise position behind the towing aircraft. Moreover, the glider pilot must maintain the same speed and same climbing rate as the tow plane. This can get particulary challenging at atlitudes exceeding 100m above ground and tailwind conditions during flight. Any small deviation from the safe flight path might cause the rope to break, stall of the towing plane or in worst case some structural damage to one or both of the planes (especially if the rope stretches abruptly).
 
-**Components** (the list will be kept updated)
-- Nvidia Jetson Nano developer board to deploy the AI model
-- Camera with Sony IMX477 Sensor (Raspberry Pi Camera module with wide-angle lens)
-- Power management (able to switch between ground power and power from onboard battery without interruption)
-- Lightweight mounting frame for all the equipment (considering center of gravity)
-- RF backlink to ground (tbd)
-- autopilot module (tbd)
+Usually, the two RC pilots, flying the glider and tow plane respectively, are standing close to each other and trying to communicate about varying wind conditions, airspeed, climbing rate, flight path, visibility etc.  **The larger the altitude, the more difficult it is for the RC glider pilot to estimate the relative position of the glider with respect to the towing aircraft and to maintain a safe flight path behind the tow plane. The rope is almost invisible at these altitudes.** 
+
+**Goal**  
+Using a computer vision machine learning model, the glider localizes his tow-plane and tries to automatically stay on the optimal flight path behind the towing aircraft until they reached the desired altitude. Glider towing is one possible application for this project. The same concept can be used for other applications such as formation flights, windshield or fuel consumption analysis.
+
+
+**System design and components**  
+![System overview](https://github.com/juliankozak/SkyLinkML/blob/main/images/Concept.png)
+
+--> IMAGE
 
 
 **Project phases**
@@ -23,10 +30,19 @@ Using a computer vision AI-based model, the glider localizes his tow-plane and t
 - Implementing RF backlink to glider pilot remote control
 - Tests & calibration
 
-# Idea and concept
 
-![Concept](https://user-images.githubusercontent.com/82274251/123086547-d5275280-d423-11eb-9df7-8a1b019ed7b5.jpeg)
-Ususally, glider and towing pilot stand close to each other on the ground in order to communicate and agree on the flight path and climbing rate. **The larger the altitude, the more difficult it is for the RC glider pilot to estimate the relative position of the glider with respect to the towing aircraft and to maintain a safe flight path behind the tow plane.** Any small deviation from the safe flight path for as little as a few seconds might cause massive stress on the glider and tow plane structure. The tow-rope tenses up very suddendly and probably forces the glider pilot to disconnect immediately to avoid crash of both planes.
+
+**Components** (the list will be kept updated)
+- Nvidia Jetson Nano developer board to deploy the AI model
+- Camera with Sony IMX477 Sensor (Raspberry Pi Camera module with wide-angle lens)
+- Power management (able to switch between ground power and power from onboard battery without interruption)
+- Lightweight mounting frame for all the equipment (considering center of gravity)
+- RF backlink to ground (tbd)
+- autopilot module (tbd)
+
+
+
+
 
 **The idea is to use the advantages of FPV (first person view) to fly the glider automatically accurately.** Once the glider localized the tow plane the necessary correction of the flight path (for example due to wind) is calculated onboard and used as an input to the autopilot that derives the necessary servo corrections.   
 
@@ -74,14 +90,34 @@ System is connected to ground power not to discharge onboard battery while prepa
 
 **Flight 2:** Second flight with towing. 
 
-Towing airplane and 40m tow-rope are ready (image in the middle). For safety reasons, a glider with onboard motor was chosen for this experiment. The motor never needed to be used but could have beed helpful in case something would have gone wrong. Eventough it was quite windy, we made some good recordings. 
+Towing airplane and 20m tow-rope are ready (image in the middle). For safety reasons, a glider with onboard motor was chosen for this experiment. The motor never needed to be used but could have beed helpful in case something would have gone wrong. Eventough it was quite windy, we made some good recordings. 
 ![second flight](https://user-images.githubusercontent.com/82274251/123091619-df4c4f80-d429-11eb-82bc-6e16b9c73797.jpeg)
 
-## Results of first flights
+### Results of first flights
 
 The following images were recorded during flight 2. 
 Left image: original image. Middle image: calculated mask. Right image: Mask superposed on the image. 
 ![calculated masks](https://user-images.githubusercontent.com/82274251/123094952-cb0a5180-d42d-11eb-96a7-cbc98af52df5.jpeg)
 
-## The project is ongoing and I am excited to update this page soon!
-(Last update June 2021)
+## Second generation of camera mount
+
+--> PHOTO BIRD EYE
+--> photo phoenix
+--> photo GUI
+--> GPS logging altitude
+--> wireless signal strength
+--> 3 photos from flight
+
+GPS module was added. 
+The focal length of the camera lens turned is ok.
+The tow plane remained nicely within the picture.
+It seems that the horizon can be used as a reference and no additional gyroscopic sensors are needed.
+center of gravity
+
+decision to continue flying experimental flights with rather small foam airplanes even though the camera load is (easier to repair in case of damage) than with larger gliders and more powerful tow planes.
+
+## The project is ongoing, and I am excited to update this page soon!
+(Last update August 2023)
+
+# Continuation
+Keeping airplanes precisely close to each other in the air without tow-rope. This can be useful for windshield analysis or for formation flights. 
