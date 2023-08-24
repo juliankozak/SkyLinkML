@@ -16,9 +16,10 @@ Using a computer vision machine learning model, the glider localizes his tow-pla
 
 
 **System design and components**  
-![System overview](https://github.com/juliankozak/SkyLinkML/blob/main/images/Concept.png)
+![Concept](https://github.com/juliankozak/SkyLinkML/assets/82274251/bc8ffd57-ade1-4609-857a-dbb89a335da2)
 
---> IMAGE
+
+
 
 
 **Project phases**
@@ -100,8 +101,8 @@ Left image: original image. Middle image: calculated mask. Right image: Mask sup
 ![calculated masks](https://user-images.githubusercontent.com/82274251/123094952-cb0a5180-d42d-11eb-96a7-cbc98af52df5.jpeg)
 
 ## Second generation of camera mount
+![camera-bird-eye-prototype](https://github.com/juliankozak/SkyLinkML/assets/82274251/2ada56be-d733-4f03-8cf9-5fed1d6ae390)
 
---> PHOTO BIRD EYE
 --> photo phoenix
 --> photo GUI
 --> GPS logging altitude
